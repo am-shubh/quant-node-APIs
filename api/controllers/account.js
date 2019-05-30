@@ -1,17 +1,11 @@
 // Dependencies
-const OverledgerSDK = require("@quantnetwork/overledger-sdk").default;
 var fs = require("fs");
-
-const mAppId = process.env.mAppId;
-const bpiKey = process.env.bpiKey;
-const dlts = [{ dlt: "bitcoin" }, { dlt: "ethereum" }, { dlt: "ripple" }];
 
 const fileName = process.env.fileName;
 
-const overledger = new OverledgerSDK(mAppId, bpiKey, { dlts });
-
 exports.create_new_account = async (req, res) => {
 
+    let overledger = req.app.locals.overledger;
     let dlt_type = req.body.dlt_type;
 
     try {
@@ -42,6 +36,8 @@ exports.create_new_account = async (req, res) => {
 }
 
 exports.set_default_account = async (req, res) => {
+
+    let overledger = req.app.locals.overledger;
 
     let dlt_type = req.body.dlt_type;
     let address = req.body.address;
@@ -146,6 +142,8 @@ exports.accounts_by_dlts = async (req, res) => {
 }
 
 exports.get_default_account = async(req, res) => {
+
+    let overledger = req.app.locals.overledger;
 
     let dlt_type = req.params.dlt_type;
 
